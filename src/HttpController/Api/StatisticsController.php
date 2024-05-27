@@ -38,7 +38,7 @@ readonly class StatisticsController
         $dashboardRows = $this->dashboardFactory->createDashboardRowsForUser($requestedUser);
 
         $response = [
-            'users' => $this->userPageAuthorizationChecker->fetchAllVisibleUsernamesForCurrentVisitor(),
+            'users' => $this->userPageAuthorizationChecker->fetchAllVisibleUsernamesForCurrentVisitor($request),
             'totalPlayCount' => $this->movieApi->fetchTotalPlayCount($userId),
             'uniqueMoviesCount' => $this->movieApi->fetchTotalPlayCountUnique($userId),
             'totalHoursWatched' => $this->movieHistoryApi->fetchTotalHoursWatched($userId),
