@@ -11,6 +11,7 @@ use Movary\Domain\User\UserEntity;
 use Movary\Domain\User\UserRepository;
 use Movary\HttpController\Api\ValueObject\AuthenticationObject;
 use Movary\HttpController\Web\CreateUserController;
+use Movary\HttpController\Api\CreateUserController;
 use Movary\Util\SessionWrapper;
 use Movary\ValueObject\DateTime;
 use Movary\ValueObject\Http\Request;
