@@ -19,11 +19,6 @@ function addWebRoutes(RouterService $routerService, FastRoute\RouteCollector $ro
 
     $routes->add('GET', '/', [Web\LandingPageController::class, 'render'], [Web\Middleware\UserIsUnauthenticated::class, Web\Middleware\ServerHasNoUsers::class]);
     $routes->add('GET', '/login', [Web\AuthenticationController::class, 'renderLoginPage'], [Web\Middleware\UserIsUnauthenticated::class]);
-    $routes->add('POST', '/create-user', [Web\CreateUserController::class, 'createUser'], [
-        Web\Middleware\UserIsUnauthenticated::class,
-        Web\Middleware\ServerHasUsers::class,
-        Web\Middleware\ServerHasRegistrationEnabled::class
-    ]);
     $routes->add('GET', '/create-user', [Web\CreateUserController::class, 'renderPage'], [
         Web\Middleware\UserIsUnauthenticated::class,
         Web\Middleware\ServerHasUsers::class,
@@ -198,6 +193,7 @@ function addApiRoutes(RouterService $routerService, FastRoute\RouteCollector $ro
     $routes->add('POST', '/authentication/token', [Api\AuthenticationController::class, 'createToken']);
     $routes->add('DELETE', '/authentication/token', [Api\AuthenticationController::class, 'destroyToken']);
     $routes->add('GET', '/authentication/token', [Api\AuthenticationController::class, 'getTokenData']);
+    $routes->add('POST', '/create-user', [Api\CreateUserController::class, 'createUser'], [Api\Middleware\IsUnauthenticated::class, Api\Middleware\CreateUserMiddleware::class]);
 
     $routes->add('GET', '/users/{username:[a-zA-Z0-9]+}/statistics/dashboard', [Api\StatisticsController::class, 'getDashboardData'], [Api\Middleware\IsAuthorizedToReadUserData::class]);
     $routes->add('GET', '/users/{username:[a-zA-Z0-9]+}/statistics/{statistic:[a-zA-Z]+}', [Api\StatisticsController::class, 'getStatistic'], [Api\Middleware\IsAuthorizedToReadUserData::class]);
@@ -230,6 +226,9 @@ function addApiRoutes(RouterService $routerService, FastRoute\RouteCollector $ro
     $routes->add('POST', '/webhook/emby/{id:.+}', [Api\EmbyController::class, 'handleEmbyWebhook']);
 
     $routes->add('GET', '/feed/radarr/{id:.+}', [Api\RadarrController::class, 'renderRadarrFeed']);
+
+    $routes->add('GET', '/images/movies/{id:\d+}', [Api\ImagesController::class, 'getMovieImage']);
+    $routes->add('GET', '/images/person/{id:\d+}', [Api\ImagesController::class, 'getPersonImage']);
 
     $routerService->addRoutesToRouteCollector($routeCollector, $routes);
 }

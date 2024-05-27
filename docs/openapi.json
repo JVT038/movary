@@ -1947,6 +1947,80 @@
         }
       }
     },
+    "/images/person/{id}": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Get person image.",
+        "description": "Get image of an actor, actress or directory based on their Movary ID.",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "description": "ID of the person in Movary",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person was found and has an image in Movary.",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Either no person exists with the given ID or the person exists, but doesn't have an image in Movary."
+          }
+        }
+      }
+    },
+    "/images/movie/{id}": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Get movie cover image.",
+        "description": "Get cover image of a movie based on their Movary ID.",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "description": "ID of the movie in Movary",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie was found and has a cover in Movary.",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Either no movie exists with the given ID or the movie exists, but doesn't have a cover image in Movary."
+          }
+        }
+      }
+    },
     "/authentication/token": {
       "get": {
         "tags": [
@@ -2015,13 +2089,7 @@
         "description": "Create an authentication token via email, password and optionally TOTP code. Add the token as X-Movary-Token header to further requests. Token lifetime 1d default, 30d with rememberMe.",
         "parameters": [
           {
-            "in": "header",
-            "name": "X-Movary-Client",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "example": "Client Name"
+            "$ref": "#/components/parameters/deviceName"
           }
         ],
         "requestBody": {
@@ -2129,6 +2197,81 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/create-user": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Create a new user",
+        "description": "Creates new user if one of the conditions are true: Public registration is enabled or the server has no users.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/deviceName"
+          }
+        ],
+        "requestBody": {
+          "description": "The request data in JSON format.",
+          "content": {
+            "application/json": {
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "myname@domain.com",
+                    "description": "E-Mail address of the new user"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "A very cool username",
+                    "description": "The username of the new user"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "My secure password",
+                    "description": "The password of the new user"
+                  },
+                  "repeatPassword": {
+                    "type": "string",
+                    "example": "My secure password",
+                    "description": "The password of the new user but repeated for security."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returned if the user was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "integer",
+                      "description": "The id of the newly created user."
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "The authentication token to be used in future requests."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
           }
         }
       }
@@ -2512,6 +2655,17 @@
       },
       "404": {
         "description": "The resource was not found"
+      }
+    },
+    "parameters": {
+      "deviceName": {
+        "in": "header",
+        "name": "X-Movary-Client",
+        "schema": {
+          "type": "string"
+        },
+        "required": true,
+        "example": "Client Name"
       }
     },
     "securitySchemes": {
