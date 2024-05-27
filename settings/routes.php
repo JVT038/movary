@@ -215,7 +215,8 @@ function addApiRoutes(RouterService $routerService, FastRoute\RouteCollector $ro
     $routes->add('DELETE', $routeUserPlayed, [Api\PlayedController::class, 'deleteFromPlayed'], [Api\Middleware\IsAuthorizedToWriteUserData::class]);
     $routes->add('PUT', $routeUserPlayed, [Api\PlayedController::class, 'updatePlayed'], [Api\Middleware\IsAuthorizedToWriteUserData::class]);
 
-    $routes->add('GET', '/movies/search', [Api\MovieSearchController::class, 'search'], [Api\Middleware\IsAuthenticated::class]);
+    $routes->add('GET', '/movies/search', [Api\MovieController::class, 'search'], [Api\Middleware\IsAuthenticated::class]);
+    $routes->add('GET', '/movies/{id:\d}', [Api\MovieController::class, 'getMovie']);
 
     $routes->add('POST', '/users/{username:[a-zA-Z0-9]+}/movies/{id:\d+}/rating', [Api\MovieRatingController::class, 'updateRating'], [Api\Middleware\IsAuthorizedToWriteUserData::class]);
     $routes->add('GET', '/fetchMovieRatingByTmdbdId', [Api\MovieRatingController::class, 'fetchMovieRatingByTmdbdId'], [Api\Middleware\IsAuthenticated::class]);

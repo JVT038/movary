@@ -4,9 +4,10 @@ namespace Movary\HttpController\Api\Middleware;
 
 use Movary\Domain\User\UserApi;
 use Movary\HttpController\Web\Middleware\MiddlewareInterface;
+use Movary\ValueObject\Http\Request;
 use Movary\ValueObject\Http\Response;
 
-class CreateUserMiddleware implements MiddlewareInterface
+class CreateUserMiddleware
 {
     public function __construct(
         readonly private UserApi $userApi,
