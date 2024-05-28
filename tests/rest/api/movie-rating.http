@@ -3,7 +3,7 @@ GET http://127.0.0.1/api/fetchMovieRatingByTmdbdId?tmdbId={{tmdbId}}
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
-X-Auth-Token: {{xAuthToken}}
+X-Movary-Token: {{xMovaryToken}}
 
 ###
 
@@ -11,7 +11,7 @@ POST http://127.0.0.1/api/users/{{username}}/movies/1/rating
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
-X-Auth-Token: {{xAuthToken}}
+X-Movary-Token: {{xMovaryToken}}
 
 {
   "rating": 10

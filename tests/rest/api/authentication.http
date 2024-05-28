@@ -50,7 +50,7 @@ X-Movary-Client: RestAPI Test
 
 > {%
     client.test("Response has correct status code", function() {
-        let expected = 200
+        let expected = 200;
         client.assert(response.status === expected, "Expected status code: " + expected);
     });
     client.test("Response has correct body", function() {
