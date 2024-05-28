@@ -17,6 +17,13 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
+> {%
+    client.test("Response has correct status code", function() {
+        let expected = 404;
+        client.assert(response.status === expected, "Expected status code: " + expected);
+    });
+%}
+
 ###
 
 GET http://127.0.0.1/api/images/person/invalidresourceid
@@ -24,3 +31,9 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
+> {%
+    client.test("Response has correct status code", function() {
+        let expected = 404;
+        client.assert(response.status === expected, "Expected status code: " + expected);
+    });
+%}

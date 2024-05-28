@@ -176,7 +176,7 @@ DELETE http://127.0.0.1/api/authentication/token
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
-X-Auth-Token: {{responseAuthToken}}
+X-Movary-Token: {{responseAuthToken}}
 
 > {%
     client.test("Response has correct status code", function() {

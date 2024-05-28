@@ -2,4 +2,14 @@ GET http://127.0.0.1/api/users
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
-X-Movary-Token: {{xAuthToken}}
+X-Movary-Token: {{xMovaryToken}}
+
+> {%
+    client.test("Response has correct status code", function() {
+        let expected = 200
+        client.assert(response.status === expected, "Expected status code: " + expected);
+    });
+    client.test("Response has correct body", function() {
+        client.assert(response.body.length > 0, "Response body doesn't contain any usernames");
+    });
+%}
