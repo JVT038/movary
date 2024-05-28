@@ -64,11 +64,4 @@ jobs:
         run: |
           docker run --rm -d --network container:database --name movary -v /home/runner/work/movary/movary:/app movary
           ./ijhttp/ijhttp tests/rest/api/authentication.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/image.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/movie.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/movie-rating.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/user-history.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/user-played.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/user-statistics.http --env-file tests/rest/api/http-client.env.json --env CI
-#          ./ijhttp/ijhttp tests/rest/api/user-watchlist.http --env-file tests/rest/api/http-client.env.json --env CI
           ./ijhttp/ijhttp tests/rest/api/visible-users.http --env-file tests/rest/api/http-client.env.json --env CI
